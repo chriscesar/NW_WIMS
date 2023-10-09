@@ -21,16 +21,19 @@ df0 %>%
   dplyr::filter(DETE_DESC == "Solids, Suspended at 105 C") %>% ## keep only suspended solids
   # dplyr::filter(grepl("MERSEY",SMPT_LONG_NAME)) %>%
   dplyr::filter(Northings <= 410000) %>% 
+  dplyr::filter(MEAS_RESULT <= 300) %>% 
   dplyr::filter(SAMP_PURPOSE_CODE == "MS") %>% 
   ggplot(., aes(x = SAMP_SAMPLE_DATE,
-                y = MEAS_RESULT,
-                group = SAMP_SMPT_USER_REFERENCE))+
-  geom_line(aes(colour=SAMP_SMPT_USER_REFERENCE), show.legend = FALSE)+
-  geom_point(aes(colour=SAMP_SMPT_USER_REFERENCE), show.legend = FALSE)+
+                y = MEAS_RESULT))+
+  geom_line(aes(group = SAMP_SMPT_USER_REFERENCE,
+                colour=SAMP_SMPT_USER_REFERENCE), show.legend = FALSE)+
+  geom_point(aes(group = SAMP_SMPT_USER_REFERENCE,
+                 colour=SAMP_SMPT_USER_REFERENCE), show.legend = FALSE)+
   theme_few()+
+  #geom_smooth()+
   labs(title = "Suspended sediment concentrations",
        subtitle = "Data for 'Solids, Suspended at 105 C'. Sample Purpose code = 'MS'. Colours represent individual sampling stations
-Data filtered to retain only those at <= 410000m Northings (Approx Formby Point)")
+Data filtered to retain only those at <= 410000m Northings (Approx Formby Point) and at measured values <= 300")
 
 
 
